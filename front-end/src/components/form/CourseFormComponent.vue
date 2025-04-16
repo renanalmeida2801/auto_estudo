@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" class="form-container">
         <input v-model="cursoLocal.nome" placeholder="Nome" required/>
         <input v-model="cursoLocal.sigla" placeholder="Sigla" required/>
         <input v-model="cursoLocal.turno" placeholder="Turno" required/>
@@ -26,6 +26,7 @@ watch(
 
 const onSubmit = ()=>{
   emit('salvar', cursoLocal.value)
+  cursoLocal.value = {nome:'', sigla:'', turno: ''}
 }
 </script>
 

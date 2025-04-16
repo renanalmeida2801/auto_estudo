@@ -45,25 +45,33 @@ const carregarCursos = async()=>{
 }
 
 const salvarUsuario = async(usuario) =>{
-    const url = editando.value? `${API_URL}/${usuario.id}` : API_URL
-    const method = editando.value? 'PUT': 'POST'
+  const url = editando.value? `${API_URL}/${usuario.id}` : API_URL
+  const method = editando.value? 'PUT': 'POST'
 
-    await fetch(url, {
-        method,
-        headers: {'Content-type': 'application/json'},
-        body: JSON.stringify({
-            nome: usuario.nome,
-            email: usuario.email,
-            curso: { id: usuario.curso }
-        })
-    })
+  const cursoId = typeof usuario.curso === 'object'? usuario.curso.id : usuario.curso
 
-    await carregarUsuarios()
-    cancelarEdicao()
+  await fetch(url, {
+      method,
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify({
+          nome: usuario.nome,
+          email: usuario.email,
+          curso: { id: cursoId }
+      })
+  })
+
+  await carregarUsuarios()
+  cancelarEdicao()
 }
 
 const editarUsuario = (usuario) => {
-    usuarioSelecionado.value = { ...usuario, curso: usuario.curso?.id }
+  console.log('Editando:', usuario)
+    usuarioSelecionado.value = {
+      id: usuario.id,
+      nome: usuario.nome,
+      email: usuario.email,
+      curso: usuario.curso?.id
+     }
     editando.value = true
 }
 

@@ -29,6 +29,7 @@ editando: Boolean
 const emit = defineEmits(['salvar', 'cancelar'])
 
 const usuarioLocal = ref({
+    id: null,
     nome: '',
     email: '',
     curso: ''
@@ -39,21 +40,24 @@ watch(
   (novo) => {
     if (novo) {
         usuarioLocal.value = {
-            nome: novo.nome || '',
-            email: novo.email || '',
-            curso: novo.curso || ''
+          id: novo.id || null,
+          nome: novo.nome || '',
+          email: novo.email || '',
+          curso: novo.curso || ''
         }
     } else {
         usuarioLocal.value = {
-            nome: '',
-            email: '',
-            curso: ''
+          id: null,
+          nome: '',
+          email: '',
+          curso: ''
         }
     }
 },{ immediate: true })
 
 const onSubmit = () => {
-    emit('salvar', { ...usuarioLocal.value })
+    emit('salvar', usuarioLocal.value )
+    usuarioLocal.value = {nome:'', email:'', curso:''}
 }
 </script>
 
